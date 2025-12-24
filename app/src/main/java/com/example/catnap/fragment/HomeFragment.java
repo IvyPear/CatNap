@@ -6,12 +6,13 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.catnap.R;
@@ -21,12 +22,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
 public class HomeFragment extends Fragment {
 
     private SleepTracker tracker;
     private TextView tvDate, tvGreeting, tvStreak, tvSleepDebt, tvSleepTime, tvWakeTime, tvSleepDuration, tvCurrentTime, tvTip;
+    private ImageView imgCatGood, imgCatLight, imgCatSevere;  // 3 avatar
 
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable clockRunnable;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
 
         tracker = new SleepTracker(requireContext());
 
+        // Tìm TextView
         tvDate = view.findViewById(R.id.tv_date);
         tvGreeting = view.findViewById(R.id.tv_greeting);
         tvStreak = view.findViewById(R.id.tv_streak);
@@ -48,8 +50,15 @@ public class HomeFragment extends Fragment {
         tvCurrentTime = view.findViewById(R.id.tv_current_time);
         tvTip = view.findViewById(R.id.tv_tip);
 
-        LinearLayout btnStartSleep = view.findViewById(R.id.btn_start_sleep);
-        LinearLayout btnWakeUp = view.findViewById(R.id.btn_wake_up);
+        // Tìm 3 avatar (thêm vào XML của bạn)
+        imgCatGood = view.findViewById(R.id.img_cat_good);
+        imgCatLight = view.findViewById(R.id.img_cat_light);
+        imgCatSevere = view.findViewById(R.id.img_cat_severe);
+
+        CardView btnStartSleep = view.findViewById(R.id.btn_start_sleep);
+        CardView btnWakeUp = view.findViewById(R.id.btn_wake_up);
+        CardView btnNap = view.findViewById(R.id.btn_nap);
+        CardView btnBreathing = view.findViewById(R.id.btn_breathing);
 
         // Đồng hồ live
         clockRunnable = new Runnable() {
@@ -57,17 +66,16 @@ public class HomeFragment extends Fragment {
             public void run() {
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 tvCurrentTime.setText(sdf.format(new Date()));
-                handler.postDelayed(this, 60000); // Cập nhật mỗi phút
+                handler.postDelayed(this, 60000);
             }
         };
         handler.post(clockRunnable);
 
-        // Random mẹo mỗi ngày
         showDailyTip();
 
-        // Cập nhật data thật
         updateHomeData();
 
+        // Event 4 nút
         btnStartSleep.setOnClickListener(v -> {
             tracker.saveSleepTime(new Date());
             updateHomeData();
@@ -80,35 +88,70 @@ public class HomeFragment extends Fragment {
             Toast.makeText(requireContext(), "Dậy thôi! Hôm nay ngủ ngon lắm nha 🌞", Toast.LENGTH_SHORT).show();
         });
 
+        btnNap.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new NapFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        btnBreathing.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new ExerciseFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         return view;
     }
 
     private void updateHomeData() {
         Calendar cal = Calendar.getInstance();
 
-        // Ngày tháng
-        SimpleDateFormat sdfDate = new SimpleDateFormat("EEEE, dd/MM", Locale.getDefault());
-        tvDate.setText(sdfDate.format(cal.getTime()));
+        tvDate.setText(new SimpleDateFormat("EEEE, dd/MM", Locale.getDefault()).format(cal.getTime()));
+        tvGreeting.setText(tracker.getGreetingText());
 
-        // Chào buổi
-        tvGreeting.setText(tracker.getGreetingText() + ", Sen");
-
-        // Streak
-        tvStreak.setText(tracker.getCurrentStreak() + " Ngày");
-
-        // Sleep debt
+        tvStreak.setText(tracker.getCurrentStreak() + " ngày liên tiếp");
         tvSleepDebt.setText(tracker.getSleepDebtText());
-
-        // Giờ ngủ/dậy
         tvSleepTime.setText(tracker.getLastSleepTimeText());
         tvWakeTime.setText(tracker.getLastWakeTimeText());
 
-        // Thời gian ngủ duration
-        tvSleepDuration.setText(tracker.getSleepDurationTodayText());
+        long durationMs = tracker.getSleepDurationToday();
+        if (durationMs == 0) {
+            tvSleepDuration.setText("Chưa ngủ");
+        } else {
+            long hours = durationMs / (60 * 60 * 1000);
+            long minutes = (durationMs % (60 * 60 * 1000)) / (60 * 1000);
+            tvSleepDuration.setText(hours + "h " + minutes + "m");
+        }
+
+        // Hiển thị avatar phù hợp
+        showSleepAvatar(durationMs);
+    }
+
+    private void showSleepAvatar(long durationMs) {
+        float hours = durationMs / (60f * 60 * 1000);
+
+        // Ẩn hết trước
+        imgCatGood.setVisibility(View.GONE);
+        imgCatLight.setVisibility(View.GONE);
+        imgCatSevere.setVisibility(View.GONE);
+
+        if (durationMs == 0) {
+            // Chưa ngủ: Có thể hiển thị avatar buồn hoặc mặc định
+            imgCatSevere.setVisibility(View.VISIBLE);
+        } else if (hours >= 7.5) {
+            imgCatGood.setVisibility(View.VISIBLE);  // Ngủ tốt
+        } else if (hours >= 5) {
+            imgCatLight.setVisibility(View.VISIBLE);  // Thiếu nhẹ
+        } else {
+            imgCatSevere.setVisibility(View.VISIBLE);  // Thiếu trầm trọng
+        }
     }
 
     private void showDailyTip() {
-        // Danh sách mẹo (bạn có thể thêm nhiều hơn)
         String[] tips = {
                 "Ngủ trước 23h giúp cải thiện chất lượng giấc ngủ đáng kể!",
                 "Tắt điện thoại 30 phút trước khi ngủ để não thư giãn.",
@@ -122,10 +165,9 @@ public class HomeFragment extends Fragment {
                 "Ngủ đủ 7-9h mỗi ngày giúp bạn khỏe mạnh hơn!"
         };
 
-        // Random theo ngày (mỗi ngày 1 mẹo khác)
         Calendar cal = Calendar.getInstance();
         int dayOfYear = cal.get(Calendar.DAY_OF_YEAR);
-        int index = dayOfYear % tips.length; // Đảm bảo mỗi ngày khác mẹo
+        int index = dayOfYear % tips.length;
 
         if (tvTip != null) {
             tvTip.setText(tips[index]);
@@ -135,6 +177,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        handler.removeCallbacks(clockRunnable); // Dừng đồng hồ
+        handler.removeCallbacks(clockRunnable);
     }
 }

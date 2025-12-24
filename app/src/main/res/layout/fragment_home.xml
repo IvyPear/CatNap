@@ -78,14 +78,37 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <!-- Avatar mèo -->
-                <ImageView
-                    android:id="@+id/img_cat_avatar"
+                <!-- 3 Avatar mèo (chỉ hiện 1 cái tùy trạng thái) -->
+                <FrameLayout
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/ic_cat_avatar"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/img_cat_good"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_cat_good"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/img_cat_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_cat_light"
                     android:scaleType="centerCrop"
-                    android:layout_marginBottom="16dp" />
+                    android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/img_cat_severe"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_cat_severe"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+                </FrameLayout>
 
                 <!-- Thời gian ngủ LỚN -->
                 <TextView
@@ -510,6 +533,6 @@
         <!-- Khoảng trống cuối -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="180dp" />
     </LinearLayout>
 </ScrollView>

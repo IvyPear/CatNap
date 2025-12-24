@@ -55,10 +55,6 @@ public class SleepTracker {
         return debt > 0 ? (float) debt / (60 * 60 * 1000) : 0;
     }
 
-    public int getCurrentStreak() {
-        return prefs.getInt(KEY_STREAK, 0);
-    }
-
     public String getSleepDebtText() {
         float debt = getSleepDebtToday();
         int streak = getCurrentStreak();
@@ -66,6 +62,10 @@ public class SleepTracker {
             return "Ngủ đủ rồi! 😴✨\nChuỗi: " + streak + " ngày 🔥";
         }
         return String.format("Còn thiếu %.1f giờ ngủ bù 💤\nChuỗi: %d ngày 🔥", debt, streak);
+    }
+
+    public int getCurrentStreak() {
+        return prefs.getInt(KEY_STREAK, 0);
     }
 
     public String getLastSleepTimeText() {
