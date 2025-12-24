@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <!-- Toolbar với nút back -->
+    <LinearLayout
+        android:id="@+id/toolbar_exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="#801E1B29">
+
+        <ImageView
+            android:id="@+id/btn_back_exercise"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tập thở"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Nội dung chính - ScrollView với padding dưới để tránh bị thanh menu che -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_exercise"
+        android:clipToPadding="false"
+        android:paddingBottom="120dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp">
+
+            <!-- Vòng tròn animation + avatar mèo -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="60dp">
+
+                <View
+                    android:id="@+id/circle_in"
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:background="@drawable/circle_breath_in"
+                    android:layout_gravity="center" />
+
+                <View
+                    android:id="@+id/circle_hold"
+                    android:layout_width="360dp"
+                    android:layout_height="360dp"
+                    android:background="@drawable/circle_breath_hold"
+                    android:layout_gravity="center" />
+
+                <View
+                    android:id="@+id/circle_out"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"
+                    android:background="@drawable/circle_breath_out"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:id="@+id/img_cat_breath"
+                    android:layout_width="280dp"
+                    android:layout_height="280dp"
+                    android:src="@drawable/ic_cat_breath"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:background="@drawable/cat_avatar_background" />
+            </FrameLayout>
+
+            <!-- Text chỉ dẫn giai đoạn -->
+            <TextView
+                android:id="@+id/tv_phase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hít vào..."
+                android:textColor="@color/text_primary"
+                android:textSize="40sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thư giãn cơ thể theo nhịp của Mèo"
+                android:textColor="@color/text_secondary"
+                android:textSize="18sp"
+                android:layout_marginBottom="60dp" />
+
+            <!-- Card điều khiển -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_lighter_rounded"
+                android:padding="24dp">
+
+                <!-- Thời gian còn lại -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thời gian còn lại"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time_left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="03:00"
+                        android:textColor="@color/text_primary"
+                        android:textSize="28sp"
+                        android:fontFamily="monospace"
+                        android:gravity="end" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng: 3 phút"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Progress bar - SỬA ĐÚNG CẤU TRÚC -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:background="#40FFFFFF"
+                    android:layout_marginBottom="32dp">
+
+                    <View
+                        android:id="@+id/progress_bar"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        android:layout_gravity="start" />
+                </FrameLayout>
+
+                <!-- Nút chọn thời lượng + controls -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Nhóm nút thời lượng -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/btn_group_bg"
+                        android:padding="4dp">
+
+                        <Button
+                            android:id="@+id/btn_1m"
+                            android:layout_width="64dp"
+                            android:layout_height="48dp"
+                            android:text="1m"
+                            android:textSize="16sp"
+                            android:background="@drawable/btn_normal"
+                            android:textColor="@color/text_secondary" />
+
+                        <Button
+                            android:id="@+id/btn_3m"
+                            android:layout_width="64dp"
+                            android:layout_height="48dp"
+                            android:text="3m"
+                            android:textSize="16sp"
+                            android:background="@drawable/btn_selected"
+                            android:textColor="@color/text_primary" />
+
+                        <Button
+                            android:id="@+id/btn_5m"
+                            android:layout_width="64dp"
+                            android:layout_height="48dp"
+                            android:text="5m"
+                            android:textSize="16sp"
+                            android:background="@drawable/btn_normal"
+                            android:textColor="@color/text_secondary" />
+                    </LinearLayout>
+
+                    <!-- Nút âm lượng + play/pause -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/btn_normal"
+                            android:text="🔊"
+                            android:textSize="20sp" />
+
+                        <Button
+                            android:id="@+id/btn_play_pause"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:text="▶"
+                            android:textSize="32sp"
+                            android:textColor="@color/primary"
+                            android:background="@android:color/white"
+                            android:elevation="8dp"
+                            android:layout_marginStart="16dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Khoảng trống dưới để tránh bị che -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
