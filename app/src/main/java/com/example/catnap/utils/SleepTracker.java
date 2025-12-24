@@ -118,4 +118,18 @@ public class SleepTracker {
         if (hour >= 12 && hour < 18) return "Chào buổi chiều";
         return "Chào buổi tối";
     }
+    // Thêm vào class SleepTracker
+    public String getDateKeyPublic(Date date) {
+        return getDateKey(date); // Gọi private method
+    }
+
+    public long getSleepTimeForDate(Date date) {
+        String dateKey = getDateKey(date);
+        return prefs.getLong(KEY_SLEEP_TIME + dateKey, 0);
+    }
+
+    public long getWakeTimeForDate(Date date) {
+        String dateKey = getDateKey(date);
+        return prefs.getLong(KEY_WAKE_TIME + dateKey, 0);
+    }
 }

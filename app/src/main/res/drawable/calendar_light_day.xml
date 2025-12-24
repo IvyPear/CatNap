@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#A78BFA" /> <!-- Tím nhạt (violet nhạt) cho trạng thái thiếu nhẹ -->
+    <corners android:radius="12dp" /> <!-- Bo góc giống các ngày khác -->
+    <stroke android:width="2dp" android:color="#FFFFFF" /> <!-- Viền trắng nhẹ cho nổi bật -->
+</shape>
