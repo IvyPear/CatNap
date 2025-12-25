@@ -1,7 +1,7 @@
 package com.example.catnap.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import com.example.catnap.utils.SleepTracker;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class CalendarFragment extends Fragment {
@@ -26,8 +27,7 @@ public class CalendarFragment extends Fragment {
     private GridView gridCalendar;
     private TextView tvMonthYear, tvStreak, tvTotalHours, tvGoodDays, tvLateDays;
     private SleepTracker tracker;
-
-    private static final String TAG = "CalendarDebug";
+    private Calendar currentMonth;
 
     @Nullable
     @Override
@@ -42,6 +42,7 @@ public class CalendarFragment extends Fragment {
         tvLateDays = view.findViewById(R.id.tv_late_days);
 
         tracker = new SleepTracker(requireContext());
+        currentMonth = Calendar.getInstance();
 
         setupCalendar();
 
@@ -49,14 +50,19 @@ public class CalendarFragment extends Fragment {
     }
 
     private void setupCalendar() {
-        Calendar currentCal = Calendar.getInstance();
-
-        // Tháng năm hiện tại (tiếng Việt)
+        // Tháng năm hiện tại
         SimpleDateFormat monthYearFormat = new SimpleDateFormat("MMMM yyyy", new Locale("vi", "VN"));
-        tvMonthYear.setText(monthYearFormat.format(currentCal.getTime()).toUpperCase());
+        String monthYear = monthYearFormat.format(currentMonth.getTime());
+        monthYear = monthYear.substring(0, 1).toUpperCase() + monthYear.substring(1);
+        tvMonthYear.setText(monthYear);
 
         // Chuỗi streak
-        tvStreak.setText(tracker.getCurrentStreak() + " ngày liên tiếp ngủ ngon 🔥");
+        int streak = tracker.getCurrentStreak();
+        if (streak > 0) {
+            tvStreak.setText(streak + " ngày liên tiếp ngủ ngon 🔥");
+        } else {
+            tvStreak.setText("Bắt đầu chuỗi ngủ ngon của bạn! ✨");
+        }
 
         // Danh sách ngày
         ArrayList<String> days = new ArrayList<>();
@@ -68,14 +74,19 @@ public class CalendarFragment extends Fragment {
         }
 
         // Calendar cho tháng hiện tại, ngày 1
-        Calendar monthCal = (Calendar) currentCal.clone();
+        Calendar monthCal = (Calendar) currentMonth.clone();
         monthCal.set(Calendar.DAY_OF_MONTH, 1);
 
-        // Tính offset: số ô trống trước ngày 1 (T2 là cột 0)
-        int firstDayOfWeek = monthCal.get(Calendar.DAY_OF_WEEK); // 1=CN, 2=T2, ..., 7=T7
-        int offset = (firstDayOfWeek == Calendar.SUNDAY) ? 6 : firstDayOfWeek - Calendar.MONDAY;
-        Log.d(TAG, "Offset khoảng trống: " + offset + " (firstDayOfWeek=" + firstDayOfWeek + ")");
+        // Tính offset
+        int firstDayOfWeek = monthCal.get(Calendar.DAY_OF_WEEK);
+        int offset;
+        if (firstDayOfWeek == Calendar.SUNDAY) {
+            offset = 6;
+        } else {
+            offset = firstDayOfWeek - Calendar.MONDAY;
+        }
 
+        // Thêm ô trống trước ngày đầu tiên
         for (int i = 0; i < offset; i++) {
             days.add("");
         }
@@ -86,121 +97,146 @@ public class CalendarFragment extends Fragment {
             days.add(String.valueOf(day));
         }
 
-        Log.d(TAG, "Tổng số item trong GridView: " + days.size());
-
         // Adapter tùy chỉnh
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, days) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.item_calendar_day, days) {
             @NonNull
             @Override
-            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                TextView textView = (TextView) super.getView(position, convertView, parent);
-                textView.setGravity(android.view.Gravity.CENTER);
-                textView.setTextColor(getResources().getColor(R.color.text_primary));
-                textView.setPadding(16, 24, 16, 24);
-                textView.setTextSize(16);
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = convertView;
+                if (view == null) {
+                    view = LayoutInflater.from(getContext()).inflate(R.layout.item_calendar_day, parent, false);
+                }
+
+                TextView textView = view.findViewById(R.id.tv_day);
+                View indicator = view.findViewById(R.id.sleep_indicator);
 
                 // Tên ngày tuần
                 if (position < 7) {
+                    String dayName = getItem(position);
+                    textView.setText(dayName);
                     textView.setTextColor(getResources().getColor(R.color.text_secondary));
-                    textView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
-                    return textView;
+                    textView.setBackgroundColor(Color.TRANSPARENT);
+                    indicator.setVisibility(View.GONE);
+                    return view;
                 }
 
-                // Ngày thực tế
-                String dayText = textView.getText().toString();
-                if (dayText.isEmpty()) {
-                    textView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
-                    return textView;
+                // Ô trống hoặc ngày thực tế
+                String dayText = getItem(position);
+                if (dayText == null || dayText.isEmpty()) {
+                    textView.setText("");
+                    textView.setBackgroundColor(Color.TRANSPARENT);
+                    indicator.setVisibility(View.GONE);
+                    return view;
                 }
 
+                // Chuyển từ position sang ngày tháng
                 int dayOfMonth;
                 try {
                     dayOfMonth = Integer.parseInt(dayText);
                 } catch (NumberFormatException e) {
-                    textView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
-                    return textView;
+                    textView.setText("");
+                    textView.setBackgroundColor(Color.TRANSPARENT);
+                    indicator.setVisibility(View.GONE);
+                    return view;
                 }
 
-                // Calendar cho ngày này
-                Calendar dayCal = (Calendar) monthCal.clone();
+                // Tạo Calendar cho ngày này
+                Calendar dayCal = Calendar.getInstance();
+                dayCal.set(Calendar.YEAR, currentMonth.get(Calendar.YEAR));
+                dayCal.set(Calendar.MONTH, currentMonth.get(Calendar.MONTH));
                 dayCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                dayCal.set(Calendar.HOUR_OF_DAY, 0);
+                dayCal.set(Calendar.MINUTE, 0);
+                dayCal.set(Calendar.SECOND, 0);
+                dayCal.set(Calendar.MILLISECOND, 0);
 
-                // Lấy data ngủ
-                long sleepTime = tracker.getSleepTimeForDate(dayCal.getTime());
-                long wakeTime = tracker.getWakeTimeForDate(dayCal.getTime());
-                long durationMs = wakeTime > sleepTime ? wakeTime - sleepTime : 0;
+                // Lấy dữ liệu ngủ THỰC TẾ
+                long sleepDurationMs = tracker.getSleepDurationForDate(dayCal.getTime());
 
-                Log.d(TAG, "Ngày " + dayOfMonth + ": durationMs = " + durationMs);
+                // Kiểm tra nếu là hôm nay
+                Calendar today = Calendar.getInstance();
+                boolean isToday = (dayCal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                        dayCal.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
+                        dayCal.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH));
 
-                // Tô màu theo trạng thái
-                if (durationMs == 0) {
-                    textView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+                // Hiển thị số ngày
+                textView.setText(String.valueOf(dayOfMonth));
+                textView.setBackgroundColor(Color.TRANSPARENT);
+
+                // Xử lý màu sắc và indicator
+                if (sleepDurationMs == 0) {
+                    // Không có dữ liệu ngủ
                     textView.setTextColor(getResources().getColor(R.color.text_secondary));
-                } else {
-                    float hours = durationMs / (3600000f);
+                    indicator.setVisibility(View.GONE);
 
+                    // Ngày quá khứ không có dữ liệu
+                    if (dayCal.before(today)) {
+                        textView.setTextColor(Color.parseColor("#888888"));
+                    }
+
+                    // Hôm nay chưa có dữ liệu
+                    if (isToday) {
+                        textView.setTextColor(getResources().getColor(R.color.primary));
+                        textView.setBackgroundResource(R.drawable.bg_today_empty);
+                    }
+                } else {
+                    // CÓ dữ liệu ngủ THỰC
+                    float hours = sleepDurationMs / (3600000f);
+
+                    // Đặt màu chữ trắng
+                    textView.setTextColor(Color.WHITE);
+
+                    // Đặt màu nền theo chất lượng giấc ngủ
                     if (hours >= 7.5f) {
-                        textView.setBackgroundResource(R.drawable.calendar_good_day);
-                        textView.setTextColor(android.graphics.Color.WHITE);
+                        textView.setBackgroundResource(R.drawable.bg_good_sleep);
                     } else if (hours >= 5f) {
-                        textView.setBackgroundResource(R.drawable.calendar_light_day);
-                        textView.setTextColor(android.graphics.Color.WHITE);
+                        textView.setBackgroundResource(R.drawable.bg_medium_sleep);
                     } else {
-                        textView.setBackgroundResource(R.drawable.calendar_bad_day);
-                        textView.setTextColor(android.graphics.Color.WHITE);
+                        textView.setBackgroundResource(R.drawable.bg_bad_sleep);
+                    }
+
+                    // Hiển thị indicator
+                    indicator.setVisibility(View.VISIBLE);
+
+                    // Hôm nay có dữ liệu
+                    if (isToday) {
+                        textView.setBackgroundResource(R.drawable.bg_today_filled);
                     }
                 }
 
-                // Hôm nay
-                Calendar today = Calendar.getInstance();
-                if (dayOfMonth == today.get(Calendar.DAY_OF_MONTH) &&
-                        dayCal.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
-                        dayCal.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
-                    textView.setBackgroundResource(R.drawable.calendar_today);
-                    textView.setTextColor(android.graphics.Color.WHITE);
-                }
-
-                return textView;
+                return view;
             }
         };
 
         gridCalendar.setAdapter(adapter);
 
-        // Thống kê tháng
+        // Cập nhật thống kê tháng
         updateMonthlyStats();
     }
 
     private void updateMonthlyStats() {
-        Calendar cal = Calendar.getInstance();
-        int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int year = currentMonth.get(Calendar.YEAR);
+        int month = currentMonth.get(Calendar.MONTH);
 
-        long totalMs = 0;
-        int goodDays = 0;
-        int lateDays = 0;
+        // Lấy dữ liệu thống kê từ SleepTracker
+        float totalHours = tracker.getTotalSleepHoursForMonth(year, month);
+        int goodDays = tracker.getGoodSleepDaysForMonth(year, month);
+        int lateDays = tracker.getLateSleepDaysForMonth(year, month);
 
-        for (int day = 1; day <= maxDay; day++) {
-            cal.set(Calendar.DAY_OF_MONTH, day);
-            long sleepTime = tracker.getSleepTimeForDate(cal.getTime());
-            long wakeTime = tracker.getWakeTimeForDate(cal.getTime());
-            long durationMs = wakeTime > sleepTime ? wakeTime - sleepTime : 0;
-
-            totalMs += durationMs;
-
-            if (durationMs > 0) {
-                float hours = durationMs / (3600000f);
-                if (hours >= 7.5f) goodDays++;
-
-                Calendar wakeCal = Calendar.getInstance();
-                wakeCal.setTimeInMillis(wakeTime);
-                if (wakeCal.get(Calendar.HOUR_OF_DAY) >= 6) {
-                    lateDays++;
-                }
-            }
-        }
-
-        long totalHours = totalMs / 3600000;
-        tvTotalHours.setText(totalHours + " giờ");
+        // Hiển thị thống kê
+        tvTotalHours.setText(String.format("%.0f giờ", totalHours));
         tvGoodDays.setText(goodDays + " ngày");
         tvLateDays.setText(lateDays + " ngày");
+
+        // Debug log
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, 1);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+        String monthStr = sdf.format(cal.getTime());
+
+        System.out.println("CalendarFragment - Thống kê tháng " + monthStr + ":");
+        System.out.println("- Tổng giờ: " + totalHours + "h");
+        System.out.println("- Ngày ngủ ngon: " + goodDays);
+        System.out.println("- Ngày ngủ muộn: " + lateDays);
     }
 }

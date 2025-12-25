@@ -48,18 +48,27 @@
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
-            <!-- Thời gian hiện tại -->
-            <TextView
-                android:id="@+id/tv_current_time"
+            <!-- Thời gian hiện tại - ĐÃ SỬA: Bọc trong FrameLayout -->
+            <FrameLayout
+                android:id="@+id/time_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23:30"
-                android:textColor="@color/primary"
-                android:textSize="32sp"
-                android:fontFamily="sans-serif-black"
-                android:background="@drawable/time_background"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp" />
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/tv_current_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23:30"
+                    android:textColor="@color/primary"
+                    android:textSize="32sp"
+                    android:fontFamily="sans-serif-black"
+                    android:background="@drawable/time_background"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp" />
+            </FrameLayout>
         </LinearLayout>
 
         <!-- CARD CHỈ SỐ NGỦ CHÍNH -->
@@ -98,16 +107,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_cat_light"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/img_cat_severe"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_cat_severe"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <!-- Thời gian ngủ LỚN -->
@@ -363,14 +372,14 @@
             android:fontFamily="sans-serif-bold"
             android:layout_marginBottom="16dp" />
 
-        <!-- 2 nút công cụ -->
+        <!-- 2 nút công cụ - KHÔNG ĐỘNG TỚI -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="24dp">
 
-            <!-- Ngủ bù -->
+            <!-- Ngủ bù - GIỮ NGUYÊN -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_nap"
                 android:layout_width="0dp"
@@ -416,7 +425,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Hít thở -->
+            <!-- Hít thở - GIỮ NGUYÊN -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_breathing"
                 android:layout_width="0dp"

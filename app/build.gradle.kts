@@ -35,7 +35,8 @@ android {
 dependencies {
     // MPAndroidChart - ổn định, hỗ trợ AndroidX
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
     // Material Design
     implementation("com.google.android.material:material:1.11.0")
 

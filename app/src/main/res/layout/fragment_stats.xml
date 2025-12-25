@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark"
@@ -40,106 +40,145 @@
             android:padding="4dp"
             android:layout_marginBottom="32dp">
 
-            <Button
+            <TextView
+                android:id="@+id/tab_week"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="Tuần"
-                android:background="@drawable/btn_selected"
+                android:gravity="center"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@drawable/btn_selected" />
 
-            <Button
+            <TextView
+                android:id="@+id/tab_month"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="Tháng"
-                android:background="@drawable/btn_normal"
+                android:gravity="center"
                 android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@drawable/btn_normal" />
 
-            <Button
+            <TextView
+                android:id="@+id/tab_year"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="Năm"
-                android:background="@drawable/btn_normal"
+                android:gravity="center"
                 android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@drawable/btn_normal" />
         </LinearLayout>
 
         <!-- Card lớn: Thời gian ngủ trung bình + BarChart -->
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_lighter_rounded"
-            android:padding="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/card_dark"
             android:layout_marginBottom="32dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical"
+                android:padding="24dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Thời gian ngủ trung bình"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="7h 30m"
-                        android:textColor="@color/text_primary"
-                        android:textSize="36sp"
-                        android:fontFamily="sans-serif-black" />
-                </LinearLayout>
-
-                <!-- Badge +12% - SỬA ĐÚNG CẤU TRÚC -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="#40A78FFF"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
 
-                    <TextView
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thời gian ngủ trung bình"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_avg_sleep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7h 30m"
+                            android:textColor="@color/text_primary"
+                            android:textSize="36sp"
+                            android:fontFamily="sans-serif-black" />
+                    </LinearLayout>
+
+                    <!-- Badge +12% -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+12%"
-                        android:textColor="#A78FFF"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif-bold" />
-                </LinearLayout>
-            </LinearLayout>
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:background="#40A78FFF"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp">
 
-            <!-- BarChart -->
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/bar_chart"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginTop="24dp" />
-        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+12%"
+                            android:textColor="#A78FFF"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tổng giờ ngủ (đã thêm id tv_total_month) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng giờ ngủ"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:layout_marginTop="24dp" />
+
+                <TextView
+                    android:id="@+id/tv_total_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="218h"
+                    android:textColor="@color/text_primary"
+                    android:textSize="32sp"
+                    android:fontFamily="sans-serif-bold"
+                    android:layout_marginTop="4dp" />
+
+                <!-- BarChart -->
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/bar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="24dp" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/line_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- 4 card nhỏ thống kê -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="32dp">
+            android:layout_marginBottom="16dp">
 
             <!-- Điểm giấc ngủ -->
             <LinearLayout
@@ -160,6 +199,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_sleep_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="85"
@@ -195,6 +235,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_efficiency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="92%"
@@ -229,6 +270,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_wake_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="06:45"
@@ -257,6 +299,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_sleep_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="23:15"
@@ -300,6 +343,7 @@
                     android:fontFamily="sans-serif-medium" />
 
                 <TextView
+                    android:id="@+id/tv_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Meow! Biểu đồ cho thấy bạn ngủ hơi muộn. Thử tắt điện thoại sớm hơn 15 phút tối nay nhé? 💤"
@@ -309,7 +353,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Khoảng trống dưới -->
+        <!-- Khoảng trống cuối -->
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp" />
