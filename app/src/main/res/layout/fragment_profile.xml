@@ -2,219 +2,724 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark"
-    android:clipToPadding="false"
-    android:paddingBottom="120dp">
+    android:paddingBottom="80dp">
 
     <LinearLayout
+        android:id="@+id/linear_layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="24dp"
-        tools:ignore="ExtraText">
+        android:padding="16dp">
 
-        <!-- Avatar mèo + level badge -->
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="32dp">
-
-            <ImageView
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:src="@drawable/ic_cat_avatar"
-                android:scaleType="centerCrop"
-                android:background="@drawable/cat_avatar_background" />
-
-            <TextView
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:text="Lv.12"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center"
-                android:background="@drawable/level_badge"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp" />
-        </FrameLayout>
-
-        <!-- Tên người dùng -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mimi's Friend"
-            android:textColor="@color/text_primary"
-            android:textSize="28sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="32dp" />
-
-        <!-- Thanh XP tròn - ĐÃ THÊM ID circle_progress -->
-        <com.github.lzyzsd.circleprogress.CircleProgress
-            android:id="@+id/circle_progress"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:circle_finished_color="@color/primary"
-        app:circle_unfinished_color="#30FFFFFF"
-        app:circle_text_color="@color/text_primary"
-        app:circle_text_size="36sp"
-        app:circle_prefix_text=""
-        app:circle_suffix_text=" XP"
-        app:circle_progress="85"
-        app:circle_max="100"
-        android:layout_marginBottom="40dp" />
-
-        <!-- Chuỗi ngày ngủ ngon -->
-        <LinearLayout
+        <!-- HEADER: AVATAR & THÔNG TIN CƠ BẢN -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_profile_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@drawable/card_lighter_rounded"
-            android:padding="20dp"
-            android:layout_marginBottom="40dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🔥"
-                android:textSize="48sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="12 ngày liên tiếp"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-medium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ngủ ngon"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:fontFamily="sans-serif-medium" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Card thống kê tổng quan -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_lighter_rounded"
-            android:padding="24dp"
-            android:layout_marginBottom="32dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thống kê tổng quan"
-                android:textColor="@color/text_primary"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="24dp" />
+            app:cardCornerRadius="24dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card_dark"
+            android:layout_marginBottom="20dp"
+            android:padding="24dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:gravity="center_vertical">
 
+                <!-- AVATAR MÈO (thêm id frame_avatar để click chọn) -->
+                <FrameLayout
+                    android:id="@+id/frame_avatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/img_avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_cat_good"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/circle_primary" />
+
+                    <!-- BADGE LEVEL -->
+                    <TextView
+                        android:id="@+id/tv_level"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:text="Lv.5"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:background="@drawable/badge_level"
+                        android:layout_gravity="bottom|end" />
+                </FrameLayout>
+
+                <!-- THÔNG TIN -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:layout_marginStart="20dp">
 
                     <TextView
+                        android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tổng giờ ngủ"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1260 giờ"
+                        android:text="Người dùng CatNap"
                         android:textColor="@color/text_primary"
-                        android:textSize="32sp"
-                        android:fontFamily="sans-serif-bold"
-                        android:layout_marginTop="8dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-bold" />
 
                     <TextView
+                        android:id="@+id/tv_sleep_goal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Điểm trung bình"
+                        android:text="Mục tiêu: 8h/ngày"
                         android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <!-- PROGRESS BAR -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="85"
-                        android:textColor="@color/text_primary"
-                        android:textSize="32sp"
-                        android:fontFamily="sans-serif-bold"
-                        android:layout_marginTop="8dp" />
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Tiến trình level"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_xp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="75/100 XP"
+                                android:textColor="@color/primary"
+                                android:textSize="12sp"
+                                android:fontFamily="sans-serif-medium" />
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/progress_level"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_marginTop="4dp"
+                            android:progress="75"
+                            android:progressDrawable="@drawable/progress_gradient" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- SECTION 1: THỐNG KÊ NHANH -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thống kê nhanh"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-bold"
+            android:layout_marginBottom="12dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_stats_cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <!-- CHUỖI NGÀY -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_streak"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/card_light"
+                android:layout_marginEnd="8dp"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔥"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tv_streak_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:textColor="@color/text_primary"
+                        android:textSize="24sp"
+                        android:fontFamily="sans-serif-bold"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ngày liên tiếp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- TỔNG GIỜ NGỦ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_total_hours"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/card_light"
+                android:layout_marginStart="8dp"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⏱️"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tv_total_hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="156"
+                        android:textColor="@color/text_primary"
+                        android:textSize="24sp"
+                        android:fontFamily="sans-serif-bold"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="giờ ngủ"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <!-- SECTION 2: MỤC TIÊU CÁ NHÂN -->
+        <TextView
+            android:id="@+id/tv_section_goals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mục tiêu của bạn"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-bold"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_goals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card_dark"
+            android:layout_marginBottom="20dp"
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
+                <!-- MỤC TIÊU 1: Giờ ngủ mục tiêu -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/layout_target_hours"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ngày ngủ ngon"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
+                        android:text="🎯"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Giờ ngủ mục tiêu"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:id="@+id/tv_target_hours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8 giờ/ngày"
+                            android:textColor="@color/primary"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btn_edit_target"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_edit"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <!-- MỤC TIÊU 2: Giờ đi ngủ lý tưởng -->
+                <LinearLayout
+                    android:id="@+id/layout_bedtime_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="168 ngày"
-                        android:textColor="@color/text_primary"
-                        android:textSize="32sp"
-                        android:fontFamily="sans-serif-bold"
-                        android:layout_marginTop="8dp" />
+                        android:text="🌙"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Giờ đi ngủ lý tưởng"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:id="@+id/tv_bedtime_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="23:00"
+                            android:textColor="@color/primary"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btn_edit_bedtime"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_edit"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <!-- MỤC TIÊU 3: Thức dậy -->
+                <LinearLayout
+                    android:id="@+id/layout_wakeup_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="☀️"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Giờ thức dậy mục tiêu"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:id="@+id/tv_wakeup_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6:30"
+                            android:textColor="@color/primary"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btn_edit_wakeup"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_edit"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:tint="@color/text_secondary" />
                 </LinearLayout>
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- SECTION 3: THIẾT LẬP -->
+        <TextView
+            android:id="@+id/tv_section_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thiết lập"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-bold"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/card_dark"
+            android:layout_marginBottom="20dp"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- NHẮC NHỞ ĐI NGỦ -->
+                <LinearLayout
+                    android:id="@+id/layout_bedtime_reminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔔"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nhắc nhở đi ngủ"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:id="@+id/tv_bedtime_reminder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="22:30 hàng ngày"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/switch_bedtime_reminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <!-- NHẮC NHỞ THỨC DẬY -->
+                <LinearLayout
+                    android:id="@+id/layout_wakeup_reminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⏰"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nhắc nhở thức dậy"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:id="@+id/tv_wakeup_reminder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6:30 hàng ngày"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/switch_wakeup_reminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <!-- CHỌN AVATAR MÈO -->
+                <LinearLayout
+                    android:id="@+id/layout_change_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🐱"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_change_avatar_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chọn avatar mèo"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <ImageButton
+                        android:id="@+id/btn_change_avatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- SECTION 4: NÚT HÀNH ĐỘNG -->
+        <LinearLayout
+            android:id="@+id/layout_action_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- XUẤT DỮ LIỆU -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_export_data"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/card_light"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/icon_export"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📊"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_export_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Xuất dữ liệu ngủ"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_export_arrow"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- LƯU THÀNH ẢNH -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_save_stats_image"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/card_light"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/icon_save_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🖼️"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_save_image_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Lưu thống kê thành ảnh"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_save_image_arrow"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:tint="@color/text_secondary"
+                        tools:ignore="UseAppTint" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- XÓA DỮ LIỆU -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_clear_data"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/card_light"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/icon_clear_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🗑️"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_clear_data_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Xóa dữ liệu"
+                        android:textColor="@color/warning"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <ImageView
+                        android:id="@+id/icon_clear_data_arrow"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="@color/warning" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
+        <!-- KHOẢNG TRỐNG CUỐI -->
         <View
+            android:id="@+id/space_bottom"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="40dp" />
     </LinearLayout>
 </ScrollView>

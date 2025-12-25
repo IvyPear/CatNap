@@ -3,19 +3,20 @@ package com.example.catnap.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.catnap.R;
-import com.example.catnap.fragment.MusicFragment.SoundItem; // Import đúng class lồng
+import com.example.catnap.fragment.MusicFragment.SoundItem;
 
 import java.util.List;
 
 public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundVH> {
 
-    private final List<SoundItem> sounds; // Dùng SoundItem trực tiếp
+    private final List<SoundItem> sounds;
     private final OnSoundClickListener listener;
 
     public interface OnSoundClickListener {
@@ -40,14 +41,10 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundVH> {
         SoundItem sound = sounds.get(position);
 
         holder.tvName.setText(sound.name);
-        holder.tvCategory.setText(sound.isPlaying
-                ? "Đang phát • " + sound.duration
-                : sound.category);
+        holder.tvCategory.setText(sound.isPlaying ? "Đang phát • " + sound.duration : sound.category);
+        holder.tvIcon.setText(sound.icon); // Material Symbol (text)
 
-        // Icon tạm dùng text (Material Symbol)
-        holder.tvIcon.setText(sound.icon);
-
-        holder.btnPlayPause.setText(sound.isPlaying ? "pause" : "play_arrow");
+        holder.btnPlayPause.setImageResource(sound.isPlaying ? R.drawable.ic_pause : R.drawable.ic_play_arrow);
 
         holder.itemView.setOnClickListener(v -> {
             if (sound.isPlaying) {
@@ -64,7 +61,8 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundVH> {
     }
 
     static class SoundVH extends RecyclerView.ViewHolder {
-        TextView tvName, tvCategory, tvIcon, btnPlayPause;
+        TextView tvName, tvCategory, tvIcon;
+        ImageView btnPlayPause;
 
         SoundVH(@NonNull View itemView) {
             super(itemView);
