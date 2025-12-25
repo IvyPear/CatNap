@@ -3,24 +3,48 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!-- Màu chính từ bản React -->
-    <color name="primary">#7f13ec</color>
+    <color name="primary">#6366F1</color>
     <color name="primary_light">#9d4bf2</color>
     <color name="primary_dark">#5e0eb0</color>
 
     <!-- Background dark -->
-    <color name="background_dark">#13111C</color>
+    <color name="background_dark">#0F172A</color>
     <color name="surface_dark">#1E1B29</color>
     <color name="card_dark">#251e2e</color>
     <color name="card_lighter">#302839</color>
 
     <!-- Text -->
     <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#ab9db9</color>
-
+    <color name="text_secondary">#94a3b8</color>
     <!-- Khác -->
     <color name="white_5">#0DFFFFFF</color> <!-- white 5% opacity -->
     <color name="white_10">#19FFFFFF</color>
     <color name="black_50">#80000000</color>
     <color name="card_light">#1E1E1E</color> <!-- Nền card nhạt hơn -->
     <color name="warning">#FF6B6B</color> <!-- Màu đỏ cảnh báo cho sleep debt -->
+
+    <color name="bg_dark">#0F172A</color>
+    <color name="surface_glass">#331E293B</color>
+    <color name="surface_solid">#1E293B</color>
+    <color name="primary_glass">#336366F1</color>
+    <color name="accent_fire">#FBBF24</color>
+    <color name="divider_glass">#1AFFFFFF</color>
+
+
+    <color name="nav_surface">#1E293B</color>
+    <color name="nav_active">#6366F1</color>
+    <color name="nav_inactive">#64748B</color>
+    <color name="nav_ripple">#336366F1</color>
+    <color name="bg_top">#0f172a</color>
+    <color name="bg_bottom">#1e1b4b</color>
+    <color name="text_orange">#ffedd5</color>
+    <color name="card_glass_bg">#1AFFFFFF</color>
+    <color name="card_streak_bg">#33F97316</color>
+    <color name="card_streak_border">#4DF97316</color>
+    <color name="cat_icon_bg">#33818cf8</color>
+    <color name="color_bad">#FF6B6B</color>
+    <color name="color_good">#4ade80</color>
+    <color name="color_accent_purple">#818cf8</color>
+
+
 </resources>

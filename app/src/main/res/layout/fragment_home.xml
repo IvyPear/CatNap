@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_dark"
+    android:background="@drawable/bg_screen_gradient"
     android:clipToPadding="false"
     android:fillViewport="true">
 
@@ -11,17 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
-        <!-- HEADER ĐƠN GIẢN -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="32dp">
 
-            <!-- Ngày & Lời chào -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -32,135 +30,187 @@
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thứ Hai, 22/12"
+                    android:text="THỨ HAI, 22/10"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.05"
                     android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:fontFamily="sans-serif-medium" />
 
                 <TextView
                     android:id="@+id/tv_greeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chào buổi tối"
+                    android:text="Chào Minh Anh 👋"
                     android:textColor="@color/text_primary"
-                    android:textSize="22sp"
+                    android:textSize="24sp"
                     android:fontFamily="sans-serif-bold"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
 
-            <!-- Thời gian hiện tại - ĐÃ SỬA: Bọc trong FrameLayout -->
             <FrameLayout
                 android:id="@+id/time_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="true"
-                android:background="?android:attr/selectableItemBackground">
+                android:focusable="true">
 
-                <TextView
-                    android:id="@+id/tv_current_time"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23:30"
-                    android:textColor="@color/primary"
-                    android:textSize="32sp"
-                    android:fontFamily="sans-serif-black"
-                    android:background="@drawable/time_background"
+                    android:background="@drawable/shape_glass_pill"
+                    android:backgroundTint="@color/surface_glass"
                     android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp" />
+                    android:paddingVertical="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_fire"
+                        android:layout_marginEnd="6dp"
+                        app:tint="#FF5722"/>
+
+                    <TextView
+                        android:id="@+id/tv_current_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-bold" />
+                </LinearLayout>
             </FrameLayout>
         </LinearLayout>
 
-        <!-- CARD CHỈ SỐ NGỦ CHÍNH -->
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="@color/card_dark"
-            android:layout_marginBottom="24dp"
-            android:padding="24dp">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="32dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+            <FrameLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp">
 
-                <!-- 3 Avatar mèo (chỉ hiện 1 cái tùy trạng thái) -->
-                <FrameLayout
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="16dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_circle"
+                    android:backgroundTint="@color/surface_glass" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="80dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardElevation="0dp">
 
                     <ImageView
                         android:id="@+id/img_cat_good"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_cat_good"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/ic_cat_good"
                         android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/img_cat_light"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_cat_light"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/ic_cat_light"
                         android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/img_cat_severe"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_cat_severe"
                         android:scaleType="centerCrop"
-                        android:visibility="gone" />
-                </FrameLayout>
+                        android:src="@drawable/ic_cat_severe"
+                        android:visibility="visible" />
+                </androidx.cardview.widget.CardView>
 
-                <!-- Thời gian ngủ LỚN -->
-                <TextView
-                    android:id="@+id/tv_sleep_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="7h 24m"
-                    android:textColor="@color/primary"
-                    android:textSize="48sp"
-                    android:fontFamily="sans-serif-black"
-                    android:gravity="center" />
-
-                <!-- Label -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tổng thời gian ngủ đêm qua"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center" />
-
-                <!-- 2 cột giờ ngủ/dậy -->
-                <LinearLayout
+                <View
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_circle_frame" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_sleep_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7h 24m"
+                android:textColor="@color/text_primary"
+                android:textSize="56sp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:letterSpacing="-0.02"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✓ Ngủ đủ giấc"
+                android:textColor="#10B981"
+                android:background="@drawable/shape_glass_pill"
+                android:backgroundTint="#1A10B981"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="32dp"
+                android:gravity="center">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center">
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_glass"
+                    app:strokeColor="#33FFFFFF"
+                    app:strokeWidth="1dp">
 
-                    <!-- Giờ ngủ -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:padding="16dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="🌙"
-                            android:textSize="24sp" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_moon"
+                                app:tint="#7986CB"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ĐI NGỦ"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_secondary"
+                                android:layout_marginStart="6dp"/>
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/tv_sleep_time"
@@ -170,37 +220,48 @@
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:fontFamily="sans-serif-bold"
-                            android:layout_marginTop="8dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Giờ ngủ"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Dấu phân cách -->
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="40dp"
-                        android:background="@color/divider_color"
-                        android:layout_marginHorizontal="16dp" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_glass"
+                    app:strokeColor="#33FFFFFF"
+                    app:strokeWidth="1dp">
 
-                    <!-- Giờ dậy -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:padding="16dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="☀️"
-                            android:textSize="24sp" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_sun"
+                                app:tint="#FFB300"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="THỨC DẬY"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_secondary"
+                                android:layout_marginStart="6dp"/>
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/tv_wake_time"
@@ -210,201 +271,193 @@
                             android:textColor="@color/text_primary"
                             android:textSize="20sp"
                             android:fontFamily="sans-serif-bold"
-                            android:layout_marginTop="8dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Giờ dậy"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
-                <!-- Chuỗi ngày ngủ ngon -->
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp"
+                android:alpha="0.6">
+                <TextView
+                    android:id="@+id/tv_streak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="@drawable/badge_primary"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="10dp"
-                    android:layout_marginTop="24dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🔥"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/tv_streak"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="12 ngày liên tiếp"
-                        android:textColor="@color/primary_light"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:layout_marginStart="12dp" />
-                </LinearLayout>
+                    android:text="12 ngày liên tiếp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_fire"
+                    android:layout_marginStart="4dp"
+                    app:tint="#FF5722"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-        <!-- NÚT HÀNH ĐỘNG CHÍNH - 2 NÚT LỚN -->
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hành động"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:text="ĐỀ XUẤT CHO BẠN"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
             android:fontFamily="sans-serif-bold"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="4dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="12dp">
 
-            <!-- Nút Bắt đầu ngủ -->
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_start_sleep"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/primary"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface_glass"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center"
                     android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="😴"
-                        android:textSize="40sp" />
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="#336366F1">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_sleep_start"
+                            app:tint="#5C6BC0"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bắt đầu ngủ"
-                        android:textColor="@android:color/white"
-                        android:textSize="18sp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
                         android:fontFamily="sans-serif-bold"
                         android:layout_marginTop="12dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ghi nhận giờ đi ngủ"
-                        android:textColor="@android:color/white"
+                        android:text="Nạp năng lượng"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"
-                        android:alpha="0.9"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <!-- Nút Dậy thôi -->
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_wake_up"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/primary_light"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface_glass"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center"
                     android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🌞"
-                        android:textSize="40sp" />
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="#33A855F7">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_wake_up_alarm"
+                            app:tint="#AB47BC"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dậy thôi"
                         android:textColor="@color/text_primary"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:fontFamily="sans-serif-bold"
                         android:layout_marginTop="12dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ghi nhận giờ thức dậy"
+                        android:text="Chào ngày mới"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- CÔNG CỤ HỖ TRỢ -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Công cụ hỗ trợ"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-bold"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 2 nút công cụ - KHÔNG ĐỘNG TỚI -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="24dp">
 
-            <!-- Ngủ bù - GIỮ NGUYÊN -->
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_nap"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/card_light"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface_glass"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="24dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="⏰"
-                        android:textSize="32sp" />
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="#33FF9800">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_timer"
+                            app:tint="#FB8C00"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -412,7 +465,7 @@
                         android:text="Ngủ bù"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="sans-serif-bold"
                         android:layout_marginTop="12dp" />
 
                     <TextView
@@ -423,34 +476,40 @@
                         android:textSize="12sp"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <!-- Hít thở - GIỮ NGUYÊN -->
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btn_breathing"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/card_light"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface_glass"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="24dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🌬️"
-                        android:textSize="32sp" />
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="#33009688">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_spa"
+                            app:tint="#00897B"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -458,90 +517,70 @@
                         android:text="Hít thở"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="sans-serif-bold"
                         android:layout_marginTop="12dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thư giãn tâm trí"
+                        android:text="Thư giãn"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- THÔNG TIN & MẸO -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/card_light"
-            android:padding="20dp">
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/surface_glass"
+            app:strokeColor="#33FFFFFF"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
 
-                <!-- Sleep debt -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_bulb"
+                    android:layout_marginEnd="16dp"
+                    app:tint="#FDD835"/>
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="⏳"
-                        android:textSize="20sp"
-                        android:layout_marginEnd="12dp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_sleep_debt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Còn thiếu 0.5 giờ ngủ bù"
-                        android:textColor="@color/warning"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium" />
-                </LinearLayout>
-
-                <!-- Mẹo hôm nay -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="💡"
-                        android:textSize="20sp"
-                        android:layout_marginEnd="12dp" />
+                        android:text="Mẹo giấc ngủ"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_tip"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Ngủ trước 23h giúp cải thiện chất lượng giấc ngủ đáng kể!"
+                        android:text="Ngủ trước 23h giúp cải thiện chất lượng giấc ngủ."
                         android:textColor="@color/text_secondary"
-                        android:textSize="14sp"
-                        android:lineSpacingExtra="4dp" />
+                        android:textSize="13sp"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Khoảng trống cuối -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="180dp" />
+        <View android:layout_width="match_parent" android:layout_height="100dp" />
     </LinearLayout>
 </ScrollView>
